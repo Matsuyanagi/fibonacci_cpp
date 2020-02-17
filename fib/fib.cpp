@@ -1,20 +1,32 @@
-﻿// fib.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
-//
+﻿#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <boost/multiprecision/cpp_int.hpp>
 
-#include <iostream>
+namespace mp = boost::multiprecision;
 
-int main()
+int main( int argc, char **argv )
 {
-    std::cout << "Hello World!\n";
+    if ( argc < 2 ){
+        std::cout << argv[ 0 ] << " number" << std::endl;
+
+    }else{
+        mp::cpp_int number( argv[ 1 ] );
+
+        mp::cpp_int prev_00(1);
+        mp::cpp_int prev_01(0);
+        mp::cpp_int current(1);
+        mp::cpp_int result(0);
+        mp::cpp_int i(0);
+
+        while( i < number )
+        {
+            result = current;
+            current = prev_00 + prev_01;
+            prev_01 = prev_00;
+            prev_00 = current;
+            i += 1;
+        }
+        std::cout << result << std::endl;
+    }
 }
-
-// プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
-// プログラムのデバッグ: F5 または [デバッグ] > [デバッグの開始] メニュー
-
-// 作業を開始するためのヒント: 
-//    1. ソリューション エクスプローラー ウィンドウを使用してファイルを追加/管理します 
-//   2. チーム エクスプローラー ウィンドウを使用してソース管理に接続します
-//   3. 出力ウィンドウを使用して、ビルド出力とその他のメッセージを表示します
-//   4. エラー一覧ウィンドウを使用してエラーを表示します
-//   5. [プロジェクト] > [新しい項目の追加] と移動して新しいコード ファイルを作成するか、[プロジェクト] > [既存の項目の追加] と移動して既存のコード ファイルをプロジェクトに追加します
-//   6. 後ほどこのプロジェクトを再び開く場合、[ファイル] > [開く] > [プロジェクト] と移動して .sln ファイルを選択します
